@@ -1,0 +1,37 @@
+@use "/assets/settings.scss";
+
+.container {
+	width: 100%;
+	height: 10vh;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+
+	z-index: 9999;
+	background-color: white;
+	border-top: solid 3px settings.$text;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+	transition: all 2s;
+
+	@media (max-width: 1050px) {
+		flex-direction: column;
+		height: auto;
+		text-align: center;
+		gap: 1vh;
+		padding-top: 1vh;
+		padding-bottom: 1vh;
+	}
+}
+
+.hide {
+	bottom: -100vh;
+}
+
+.image {
+	aspect-ratio: 1/1;
+	height: 8vh;
+}

@@ -1,0 +1,49 @@
+@use "/assets/settings.scss";
+
+* {
+	margin: 0;
+}
+
+html {
+	font-size: calc(0.6vmax + 7px);
+}
+
+body {
+	color: settings.$text;
+	background-color: white;
+
+	@include settings.useWebpBackground("/background.png", "/background.webp");
+	background-position: left top;
+	overflow-x: hidden;
+}
+
+main {
+	width: 100%;
+
+	& > article {
+		width: 100%;
+		min-height: calc(100vh - 20vh);
+		min-height: calc(100dvh - 20vh);
+		padding-top: 10vh;
+		padding-bottom: 10vh;
+	}
+}
+
+footer {
+	width: 100%;
+	text-align: center;
+	font-size: 0.75rem;
+	font-weight: bold;
+
+	position: fixed;
+	bottom: 1vh;
+	left: 50%;
+	transform: translateX(-50%);
+	@include settings.textGradient(90deg, settings.$lightBlue, settings.$green);
+}
+
+.logout {
+	position: absolute !important;
+	right: 1rem !important;
+	top: 1rem !important;
+}

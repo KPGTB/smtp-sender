@@ -1,0 +1,25 @@
+@use "/assets/settings.scss";
+
+.button {
+	all: unset;
+	cursor: pointer;
+
+	border-radius: 10px;
+	padding: 10px;
+
+	font-size: 0.75rem;
+	font-weight: bold;
+
+	transition: all 0.1s ease;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border: solid 2px settings.$text;
+	color: settings.$text;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}

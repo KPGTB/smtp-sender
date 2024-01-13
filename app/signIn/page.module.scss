@@ -1,0 +1,50 @@
+@use "/assets/settings.scss";
+
+.container {
+	background-color: white;
+	box-shadow: 0 0 10px settings.$text;
+	padding: 2rem;
+	gap: 2rem;
+
+	width: 20%;
+
+	@media (max-width: 700px) {
+		width: 70% !important;
+	}
+
+	@media (max-width: 1100px) and (min-width: 700px) {
+		width: 40% !important;
+	}
+
+	@media (max-width: 1300px) and (min-width: 1100px) {
+		width: 30% !important;
+	}
+
+	@include settings.flex(column, center, center);
+	@include settings.center();
+}
+
+.credentials {
+	width: 100%;
+	gap: 2rem;
+
+	& .input {
+		width: 95% !important;
+	}
+
+	@include settings.flex(column, space-between, center);
+}
+
+.server {
+	width: 100%;
+
+	& .host {
+		width: 60% !important;
+	}
+
+	& .port {
+		width: 20% !important;
+	}
+
+	@include settings.flex(row, space-between, center);
+}
