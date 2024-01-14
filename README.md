@@ -1,1 +1,10 @@
 # smtp-sender
+
+.env
+
+```
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+RECAPTCHA_SECRET=
+RECAPTCHA_PUBLIC=
+```
