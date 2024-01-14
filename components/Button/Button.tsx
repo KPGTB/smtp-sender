@@ -2,10 +2,11 @@
 
 import {signOut} from "next-auth/react"
 import Link from "next/link"
-import {ButtonHTMLAttributes, DetailedHTMLProps} from "react"
+import {ButtonHTMLAttributes, DetailedHTMLProps, useRef, useState} from "react"
 
 import {classesToClass} from "@/utils/convert"
 
+import Ring from "../loading/Loading"
 import styles from "./Button.module.scss"
 
 const Button = ({
@@ -48,6 +49,38 @@ const LogoutButton = ({
 	)
 }
 
+const ButtonWithLoading = ({
+	children,
+	className,
+	...delegated
+}: {
+	children: React.ReactNode
+	className?: string
+}) => {
+	const [clicked, setClicked] = useState<boolean>(false)
+	const ref = useRef<HTMLButtonElement>(null)
+	return clicked ? (
+		<Ring />
+	) : (
+		<>
+			<button
+				className={styles.hidden}
+				ref={ref}
+			></button>
+			<Button
+				className={className}
+				onClick={() => {
+					setClicked(true)
+					ref.current?.click()
+				}}
+				{...delegated}
+			>
+				{children}
+			</Button>
+		</>
+	)
+}
+
 const LinkButton = ({
 	children,
 	href,
@@ -69,4 +102,4 @@ const LinkButton = ({
 	)
 }
 
-export {Button, LinkButton, LogoutButton}
+export {Button, LinkButton, LogoutButton, ButtonWithLoading}

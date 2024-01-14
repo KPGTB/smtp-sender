@@ -5,12 +5,15 @@ import {getServerSession} from "next-auth"
 import {cookies as useCookies} from "next/headers"
 import {redirect} from "next/navigation"
 import {createTransport} from "nodemailer"
+import {BiSolidContact} from "react-icons/bi"
+import {FaUser} from "react-icons/fa"
+import {MdMail} from "react-icons/md"
 
-import {Button} from "@/components/ui/Button/Button"
-import Captcha from "@/components/ui/Captcha/Captcha"
-import Input from "@/components/ui/Input/Input"
-import TextEditor from "@/components/ui/TextEditor/TextEditor"
-import {ToastError, ToastSuccess} from "@/components/ui/Toast/Toast"
+import {ButtonWithLoading} from "@/components/Button/Button"
+import Captcha from "@/components/Captcha/Captcha"
+import Input from "@/components/Input/Input"
+import TextEditor from "@/components/TextEditor/TextEditor"
+import {ToastError, ToastSuccess} from "@/components/Toast/Toast"
 import {classesToClass} from "@/utils/convert"
 
 import {authOptions} from "./api/auth/[...nextauth]/route"
@@ -35,7 +38,12 @@ const send = async (data: FormData) => {
 	useCookies().set("from", from, {expires: Date.now() + expire})
 
 	if (token === "") {
-		redirect("/?error=nocaptcha")
+		redirect("/send?error=You need to complete ReCaptcha!")
+		return
+	}
+
+	if (title === "" || to === "" || from === "" || editorContent === "") {
+		redirect("/send?error=You need to fill each input!")
 		return
 	}
 
@@ -51,7 +59,7 @@ const send = async (data: FormData) => {
 	const json = await res.json()
 
 	if (!json.success) {
-		redirect("/?error=captcha")
+		redirect("/send?error=Captcha failed!")
 		return
 	}
 
@@ -73,8 +81,11 @@ const send = async (data: FormData) => {
 		subject: title,
 		html: content,
 	}
-	await transporter.sendMail(options)
-	redirect("/?success=yes")
+	await transporter.sendMail(options).catch((err) => {
+		redirect(`/send?error=${err.message}`)
+		return
+	})
+	redirect("/send?success=yes")
 }
 
 const Page = ({
@@ -96,21 +107,27 @@ const Page = ({
 					placeholder="Example Author <example@example.com>"
 					defaultValue={from}
 					className={styles.input}
-					required
+					container={styles.inputContainer}
+					label={"From"}
+					icon={{i: FaUser}}
 				/>
 
 				<Input
 					name="to"
 					placeholder="target1@example.com, target2@example.com"
 					className={styles.input}
-					required
+					container={styles.inputContainer}
+					label={"To (split emails using comma)"}
+					icon={{i: BiSolidContact}}
 				/>
 
 				<Input
 					name="title"
 					placeholder="Title"
 					className={styles.input}
-					required
+					container={styles.inputContainer}
+					label={"Title"}
+					icon={{i: MdMail}}
 				/>
 
 				<TextEditor
@@ -119,15 +136,11 @@ const Page = ({
 				/>
 
 				<Captcha publicKey={process.env.RECAPTCHA_PUBLIC} />
-				<Button aria-label="Connect">Send</Button>
+				<ButtonWithLoading aria-label="Send message">
+					Send
+				</ButtonWithLoading>
 
-				{searchParams.error === "nocaptcha" && (
-					<ToastError text="You need to complete ReCaptcha!" />
-				)}
-
-				{searchParams.error === "captcha" && (
-					<ToastError text="Captcha failed!" />
-				)}
+				{searchParams.error && <ToastError text={searchParams.error} />}
 
 				{searchParams.success === "yes" && (
 					<ToastSuccess text="Messages has been sent!" />

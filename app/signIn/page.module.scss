@@ -28,8 +28,8 @@
 	width: 100%;
 	gap: 2rem;
 
-	& .input {
-		width: 95% !important;
+	& .inputContainer {
+		width: 100% !important;
 	}
 
 	@include settings.flex(column, space-between, center);
@@ -38,11 +38,11 @@
 .server {
 	width: 100%;
 
-	& .host {
+	& .hostContianer {
 		width: 60% !important;
 	}
 
-	& .port {
+	& .portContainer {
 		width: 20% !important;
 	}
 

@@ -5,11 +5,12 @@ import "react-toastify/dist/ReactToastify.css"
 import {signIn} from "next-auth/react"
 import {useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
+import {FaKey, FaServer, FaUser} from "react-icons/fa"
 import {Bounce, toast, ToastContainer} from "react-toastify"
 
-import {Button} from "@/components/ui/Button/Button"
-import Input from "@/components/ui/Input/Input"
-import Ring from "@/components/ui/loading/Loading"
+import {Button} from "@/components/Button/Button"
+import Input from "@/components/Input/Input"
+import Ring from "@/components/loading/Loading"
 import {classesToClass} from "@/utils/convert"
 
 import styles from "./page.module.scss"
@@ -67,6 +68,9 @@ const Page = () => {
 						name="server"
 						placeholder="smtp.gmail.com"
 						className={styles.host}
+						container={styles.hostContainer}
+						icon={{i: FaServer}}
+						label={"Host"}
 						required
 					/>
 					<Input
@@ -74,6 +78,9 @@ const Page = () => {
 						placeholder="23"
 						pattern="^[1-9][0-9]{0,4}$"
 						className={styles.port}
+						container={styles.portContainer}
+						icon={{i: FaServer}}
+						label={"Port"}
 						required
 					/>
 				</section>
@@ -83,6 +90,9 @@ const Page = () => {
 						name="login"
 						placeholder="Login"
 						className={styles.input}
+						container={styles.inputContainer}
+						icon={{i: FaUser}}
+						label={"Login to SMTP"}
 						required
 					/>
 					<Input
@@ -90,6 +100,9 @@ const Page = () => {
 						type="password"
 						placeholder="Password"
 						className={styles.input}
+						container={styles.inputContainer}
+						icon={{i: FaKey}}
+						label={"Password to SMTP"}
 						required
 					/>
 				</section>

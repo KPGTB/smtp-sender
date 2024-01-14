@@ -1,0 +1,37 @@
+@use "/assets/settings.scss";
+
+.input {
+	all: unset;
+	height: 4vh;
+	text-align: center;
+	border: solid 1px settings.$text;
+	border-radius: 20px;
+	padding-left: calc(1vw + 1rem);
+	padding-right: 10px;
+	font-size: 0.75rem;
+	width: calc(100% - 1vw - 1rem);
+
+	transition: all 0.1s ease;
+	&:focus {
+		border-color: settings.$text;
+	}
+}
+
+.container {
+	position: relative;
+}
+
+.icon {
+	position: absolute;
+	top: 50%;
+	left: 1vw;
+	transform: translateY(-50%);
+}
+
+.label {
+	position: absolute;
+	top: -1rem;
+	left: 0;
+	font-size: 0.6rem;
+	font-style: italic;
+}

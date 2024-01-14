@@ -33,17 +33,31 @@ footer {
 	width: 100%;
 	text-align: center;
 	font-size: 0.75rem;
-	font-weight: bold;
 
 	position: fixed;
 	bottom: 1vh;
 	left: 50%;
 	transform: translateX(-50%);
-	@include settings.textGradient(90deg, settings.$lightBlue, settings.$green);
+
+	& a {
+		color: settings.$text;
+		text-decoration: none;
+		font-weight: bold;
+	}
 }
 
-.logout {
-	position: absolute !important;
-	right: 1rem !important;
-	top: 1rem !important;
+nav {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2vw;
+
+	p {
+		font-size: 0.6rem;
+		text-align: center;
+	}
 }

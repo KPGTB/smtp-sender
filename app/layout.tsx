@@ -4,8 +4,8 @@ import "./globals.scss"
 import {getServerSession} from "next-auth"
 import {Inter} from "next/font/google"
 
-import {LogoutButton} from "@/components/ui/Button/Button"
-import Cookies from "@/components/ui/Cookies/Cookies"
+import {LogoutButton} from "@/components/Button/Button"
+import Cookies from "@/components/Cookies/Cookies"
 
 import {authOptions} from "./api/auth/[...nextauth]/route"
 
@@ -33,6 +33,7 @@ export const metadata: Metadata = {
 const Layout = async ({children}: {children: React.ReactNode}) => {
 	const session = await getServerSession(authOptions)
 	const logged = session !== null && session.user !== undefined
+	const data = logged ? session.user.smtpData : undefined
 
 	return (
 		<html lang="en">
@@ -40,12 +41,22 @@ const Layout = async ({children}: {children: React.ReactNode}) => {
 				<Cookies font={inter.className} />
 
 				{logged && (
-					<LogoutButton className="logout">Logout</LogoutButton>
+					<nav>
+						<p className="info">
+							{data.auth.user}
+							<br />
+							{data.host + ":" + data.port}
+						</p>
+						<LogoutButton>Logout</LogoutButton>
+					</nav>
 				)}
 				<main>{children}</main>
 				<footer>
-					SMTP Sender App | KPG-TB 2024 &copy; Licensed under{" "}
-					<a href="https://github.com/KPGTB/smtp-sender/blob/main/LICENSE">
+					SMTP Sender App | <b>KPG-TB</b> 2024 &copy; Licensed under{" "}
+					<a
+						href="https://github.com/KPGTB/smtp-sender/blob/main/LICENSE"
+						target="_blank"
+					>
 						Apache 2.0
 					</a>
 				</footer>
