@@ -1,5 +1,7 @@
 "use client"
 
+import "react-toastify/dist/ReactToastify.css"
+
 import {useEffect} from "react"
 import {Bounce, toast, ToastContainer} from "react-toastify"
 

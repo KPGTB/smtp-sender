@@ -1,20 +1,4 @@
-$lightBlue: #25a0db;
-$blue: #1c79bf;
-$green: #7abf48;
 $text: rgb(39, 41, 49);
-
-@mixin textGradient($deg, $colors...) {
-	background-color: nth($colors, 1);
-	background-image: linear-gradient($deg, $colors);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
-
-@mixin borderGradient($deg, $colors...) {
-	border-color: nth($colors, 1);
-	border-image-slice: 1;
-	border-image-source: linear-gradient($deg, $colors);
-}
 
 @mixin useWebpBackground($png, $webp) {
 	background-image: url($png);

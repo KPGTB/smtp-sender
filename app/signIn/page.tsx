@@ -1,16 +1,12 @@
 "use client"
 
-import "react-toastify/dist/ReactToastify.css"
-
 import {signIn} from "next-auth/react"
 import {useSearchParams} from "next/navigation"
-import {useEffect, useState} from "react"
 import {FaKey, FaServer, FaUser} from "react-icons/fa"
-import {Bounce, toast, ToastContainer} from "react-toastify"
 
-import {Button} from "@/components/Button/Button"
+import {ButtonWithLoading} from "@/components/Button/Button"
 import Input from "@/components/Input/Input"
-import Ring from "@/components/loading/Loading"
+import {ToastError} from "@/components/Toast/Toast"
 import {classesToClass} from "@/utils/convert"
 
 import styles from "./page.module.scss"
@@ -32,33 +28,12 @@ const handleForm = async (e: any) => {
 const Page = () => {
 	const params = useSearchParams()
 	const hasError: boolean = params.has("error")
-	const [loading, setLoading] = useState<boolean>(false)
-
-	useEffect(() => {
-		if (hasError) {
-			toast.error("Wrong credentials!", {
-				position: "bottom-right",
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "light",
-				transition: Bounce,
-			})
-		}
-	}, [hasError])
 
 	return (
 		<article>
 			<form
-				className={classesToClass(
-					styles.container,
-					hasError ? styles.errorContainer : ""
-				)}
+				className={classesToClass(styles.container)}
 				onSubmit={(e) => {
-					setLoading(true)
 					handleForm(e)
 				}}
 			>
@@ -71,7 +46,6 @@ const Page = () => {
 						container={styles.hostContainer}
 						icon={{i: FaServer}}
 						label={"Host"}
-						required
 					/>
 					<Input
 						name="port"
@@ -80,8 +54,6 @@ const Page = () => {
 						className={styles.port}
 						container={styles.portContainer}
 						icon={{i: FaServer}}
-						label={"Port"}
-						required
 					/>
 				</section>
 
@@ -93,7 +65,6 @@ const Page = () => {
 						container={styles.inputContainer}
 						icon={{i: FaUser}}
 						label={"Login to SMTP"}
-						required
 					/>
 					<Input
 						name="password"
@@ -103,7 +74,6 @@ const Page = () => {
 						container={styles.inputContainer}
 						icon={{i: FaKey}}
 						label={"Password to SMTP"}
-						required
 					/>
 				</section>
 
@@ -116,14 +86,12 @@ const Page = () => {
 					Use secure connection
 				</section>
 
-				{loading ? (
-					<Ring />
-				) : (
-					<Button aria-label="Connect">Connect</Button>
-				)}
+				<ButtonWithLoading aria-label="Sign in">
+					Sign in
+				</ButtonWithLoading>
 			</form>
 
-			<ToastContainer />
+			{hasError && <ToastError text="Wrong credentials!" />}
 		</article>
 	)
 }

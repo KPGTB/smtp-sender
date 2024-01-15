@@ -1,7 +1,6 @@
 "use client"
 
 import {signOut} from "next-auth/react"
-import Link from "next/link"
 import {ButtonHTMLAttributes, DetailedHTMLProps, useRef, useState} from "react"
 
 import {classesToClass} from "@/utils/convert"
@@ -81,25 +80,4 @@ const ButtonWithLoading = ({
 	)
 }
 
-const LinkButton = ({
-	children,
-	href,
-	className,
-	...delegated
-}: {
-	children: React.ReactNode
-	href: string
-	className?: string
-}) => {
-	return (
-		<Link
-			href={href}
-			className={classesToClass(styles.button, className || "")}
-			{...delegated}
-		>
-			{children}
-		</Link>
-	)
-}
-
-export {Button, LinkButton, LogoutButton, ButtonWithLoading}
+export {Button, LogoutButton, ButtonWithLoading}
