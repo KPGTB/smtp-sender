@@ -7,6 +7,7 @@ import SMTPTransport from "nodemailer/lib/smtp-transport/index"
 import {stringToB64} from "@/utils/convert"
 
 const authOptions = {
+	secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		Credentials({
 			name: "SMTP",
